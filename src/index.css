@@ -1,0 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;500;600;700;800;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Lato", sans-serif;
+  color: #2f3742;
+  background: rgb(233, 234, 229);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-rise {
+  animation: rise 260ms ease-out both;
+}
