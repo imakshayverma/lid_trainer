@@ -58,6 +58,10 @@ export const REGION_OPTIONS = Array.from(regionMap.entries())
   .map(([code, name]) => ({ code, name }))
   .sort((a, b) => a.name.localeCompare(b.name, "de"));
 
-export const DEFAULT_REGION_CODE = REGION_OPTIONS[0]?.code ?? "";
+const BERLIN_REGION_CODE = "BE";
+
+export const DEFAULT_REGION_CODE = regionMap.has(BERLIN_REGION_CODE)
+  ? BERLIN_REGION_CODE
+  : REGION_OPTIONS[0]?.code ?? "";
 
 export const QUESTION_LOOKUP = new Map(QUESTIONS.map((question) => [question.id, question]));
