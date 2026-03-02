@@ -1,4 +1,4 @@
-# Leben in Deutschland Trainer
+# Naturalization Test (Einbürgerungstest and Leben in Deutschland) Trainer
 
 A lightweight React + Vite web app to practice for the German naturalization exam (`Einbürgerungstest`) using a local question dataset. The app has been vibecoded using Codex.
 
