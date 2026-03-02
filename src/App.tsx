@@ -289,11 +289,11 @@ function App() {
     <div className="mx-auto min-h-screen w-full max-w-6xl px-4 pb-10 pt-6 font-sans md:px-8">
       <header className="flex items-start justify-between gap-4 animate-rise">
         <div>
-          <h1 className="text-3xl font-black text-nb-1 md:text-5xl">
-            Einbürgerungstest Practice Guide
+          <h1 className="text-2xl font-bold text-nb-1 md:text-5xl">
+            Naturalization Test Trainer
           </h1>
-          <p className="mt-2 text-sm font-semibold uppercase tracking-wide text-nb-4">
-            {scopeLabel}
+          <p className="mt-2 text-lg font-light tracking-wide text-nb-1">
+            Einbürgerungstest and Leben in Deutschland Exam Trainer
           </p>
         </div>
         <button
@@ -383,11 +383,11 @@ function App() {
                         {index + 1}
                       </span>
                       <div>
-                        <p className="text-sm font-medium leading-relaxed text-nb-1 sm:text-base">
+                        <p className="text-sm font-semibold leading-relaxed text-nb-1 sm:text-base">
                           {optionDe}
                         </p>
                         {settings.showOptionEn && optionEn ? (
-                          <p className="mt-1 text-xs font-normal text-nb-2 sm:text-sm">{optionEn}</p>
+                          <p className="mt-1 text-xs font-normal normal-case text-nb-2 sm:text-sm">{optionEn}</p>
                         ) : null}
                       </div>
                     </div>

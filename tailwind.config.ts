@@ -10,16 +10,17 @@ const config: Config = {
       },
       colors: {
         nb: {
-          1: "#2F3742",
-          2: "#6C7481",
-          3: "#D0D4DC",
-          4: "#EE8E3B",
-          5: "#FFFFFF",
-          6: "#F1F1F1",
-          7: "#FDEAD8",
-          8: "#258A58",
-          9: "#C34C4C"
+          1: "#1F2937", // primary text
+          2: "#52606D", // secondary text
+          3: "#D8E1EB", // borders/dividers
+          4: "#4F6373", // primary accent (buttons/focus)
+          5: "#FFFFFF", // base surface
+          6: "#F6F8FB", // elevated/alt surface
+          7: "#EAF1FF", // selected/soft accent background
+          8: "#2D8A54", // success
+          9: "#C44343"  // error
         }
+
       },
       boxShadow: {
         panel: "0 4px 10px rgba(0, 0, 0, 0.19), 0 3px 9px rgba(0, 0, 0, 0.23);",
