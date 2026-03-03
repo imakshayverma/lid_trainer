@@ -284,11 +284,6 @@ function App() {
       : settings.questionScope === "region"
         ? `${selectedRegionName} only`
         : `General + ${selectedRegionName}`;
-  const answeredCount = stats.correct + stats.incorrect;
-  const accuracy = answeredCount > 0 ? Math.round((stats.correct / answeredCount) * 100) : 0;
-  const completion = scopedIds.length > 0
-    ? Math.round(((answeredCount + stats.skipped) / scopedIds.length) * 100)
-    : 0;
 
   return (
     <div className="min-h-screen px-2 py-3 text-[#2d3742] md:px-5 md:py-5">
@@ -312,7 +307,7 @@ function App() {
                 type="button"
                 onClick={() => setInfoOpen(true)}
                 aria-label="Open instructions"
-                className="rounded-lg border border-[#d3e1ea] bg-[#FAB95B] px-3 py-2 text-sm font-semibold text-[#00000] transition hover:border-[#c4d6e2] hover:bg-[#e2edf5]"
+                className="rounded-lg border border-[#d3e1ea] bg-[#E5BA41] px-3 py-2 text-sm font-semibold text-[#00000] transition hover:border-[#c4d6e2] hover:bg-[#e2edf5]"
               >
                 Instructions
               </button>
@@ -333,19 +328,19 @@ function App() {
               />
             ) : (
               <>
-                <div className="flex flex-wrap items-center justify-between gap-2.5">
+                <div className="-mx-3 -mt-3 flex flex-wrap items-center justify-between gap-2.5 rounded-t-xl border-b border-[#cedde1] bg-[#afc9aa] px-3 py-4 sm:-mx-4 sm:-mt-4 sm:px-4 sm:py-4">
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-wide text-[#6a7a8b] sm:text-sm">
+                    <p className="text-lg font-extrabold tracking-tight text-[#2c3642] sm:text-xl">
                       {activeQuestion.category}
                     </p>
-                    <p className="mt-0.5 text-xs font-semibold text-[#7f8da0] sm:text-sm">
+                    <p className="mt-0.5 text-xs font-light sm:text-sm">
                       Question {answeredPosition} / {activeIds.length}
                     </p>
                   </div>
                   <ProgressPill status={currentProgress?.status} />
                 </div>
 
-                <article className="mt-3 rounded-xl border border-[#dbe5e8] bg-[#f4f8f7] p-3 sm:mt-4 sm:p-4">
+                <article className="mt-2.5 rounded-xl border border-[#dbe5e8] bg-[#f4f8f7] p-3 sm:mt-3 sm:p-4">
                   <h2 className="text-base font-bold leading-snug text-[#2a3440] sm:text-lg">
                     {activeQuestion.question.de}
                   </h2>
@@ -447,12 +442,14 @@ function App() {
 
           <aside className="grid gap-3 md:grid-cols-2 xl:grid-cols-1">
             <section className="rounded-xl border border-[#d7e2e5] bg-[#fffdf9] p-4 shadow-[0_20px_34px_-32px_rgba(49,62,78,0.45)] sm:p-4">
-              <h3 className="text-xl font-extrabold tracking-tight text-[#2c3642] sm:text-2xl">
-                Configuration
-              </h3>
-              <p className="mt-0.5 text-sm font-medium text-[#6f7b8d]">
-                Tune scope, region, review decks, and translation support.
-              </p>
+              <div className="-mx-4 -mt-4 rounded-t-xl border-b border-[#c9dadf] bg-[#eecd72] px-4 py-2.5">
+                <h3 className="text-xl font-extrabold tracking-tight text-[#2c3642] sm:text-2xl">
+                  Configuration
+                </h3>
+                <p className="mt-0.5 text-sm font-light ">
+                  Tune scope, region, review decks, and translation support.
+                </p>
+              </div>
 
               <div className="mt-3">
                 <p className="text-xs font-semibold uppercase tracking-wide text-[#7a8898]">
@@ -557,12 +554,14 @@ function App() {
             </section>
 
             <section className="rounded-xl border border-[#d7e2e5] bg-[#fffdf9] p-4 shadow-[0_20px_34px_-32px_rgba(49,62,78,0.45)] sm:p-4">
-              <h3 className="text-xl font-extrabold tracking-tight text-[#2c3642] sm:text-2xl">
-                Progress
-              </h3>
-              <p className="mt-0.5 text-sm font-medium text-[#6f7b8d]">
-                Track outcomes and return to your weak areas quickly.
-              </p>
+              <div className="-mx-4 -mt-4 rounded-t-xl bg-[#eecd72] px-4 py-2.5">
+                <h3 className="text-xl font-extrabold tracking-tight text-[#2c3642] sm:text-2xl">
+                  Progress
+                </h3>
+                <p className="mt-0.5 text-sm font-light">
+                  Track outcomes and return to your weak areas quickly.
+                </p>
+              </div>
               <div className="mt-3 grid grid-cols-2 gap-2">
                 <StatCard label="Correct" value={stats.correct} />
                 <StatCard label="Incorrect" value={stats.incorrect} />
@@ -582,6 +581,56 @@ function App() {
             </section>
           </aside>
         </div>
+
+        <footer className="overflow-hidden rounded-xl border border-[#36414b] shadow-[0_16px_30px_-26px_rgba(20,26,34,0.85)]">
+          <div className="border-t border-[#4a5560] bg-[#313b46] px-4 py-4 text-center text-white sm:py-4">
+            <p className="text-lg font-thin text-white/85">Designed and VibeCoded by-</p>
+            <h4 className="mt-1 text-2xl font-extrabold tracking-tight sm:text-2xl">
+              Akshay Verma
+            </h4>
+            <div className="mt-3 flex items-center justify-center gap-3 text-2xl text-white/95">
+              <a
+                href="https://twitter.com/imakshayverma"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Twitter"
+                className="transition hover:text-white/70"
+              >
+                <i className="fa-brands fa-x-twitter" aria-hidden="true"></i>
+              </a>
+              <a
+                href="https://github.com/imakshayverma"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="GitHub"
+                className="transition hover:text-white/70"
+              >
+                <i className="fa-brands fa-github" aria-hidden="true"></i>
+              </a>
+              <a
+                href="https://www.instagram.com/akshayverma295/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram"
+                className="transition hover:text-white/70"
+              >
+                <i className="fa-brands fa-instagram" aria-hidden="true"></i>
+              </a>
+              <a
+                href="https://in.linkedin.com/in/imakshayverma"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="LinkedIn"
+                className="transition hover:text-white/70"
+              >
+                <i className="fa-brands fa-linkedin" aria-hidden="true"></i>
+              </a>
+            </div>
+            <p className="mt-4 text-sm font-light text-white/85">
+              Data Sourced from - <a href="https://lebenindeutsch.land/download" target="_blank">https://lebenindeutsch.land/download</a>
+            </p>
+          </div>
+        </footer>
       </div>
 
       {infoOpen ? (
@@ -795,7 +844,7 @@ function InfoModal({
           </section>
 
           <section>
-            <h3 className="mb-1.5 text-lg font-semibold text-[#2d3642]">What This App Helps You Do</h3>
+            <h3 className="mb-4 text-lg font-extrabold text-[#2d3642]">What This App Helps You Do</h3>
             <p>
               Train with the official-style question pool used for the
               <span className="font-bold text-[#2d3642]"> Einbuergerungstest</span> and
@@ -817,7 +866,7 @@ function InfoModal({
           </section>
           <hr className="border-[#dee8ea]" />
           <section className="mt-4">
-            <h3 className="mb-1.5 text-lg font-semibold text-[#2d3642]">How To Use This App</h3>
+            <h3 className="mb-5 text-lg font-extrabold text-[#2d3642]">How To Use This App</h3>
             <p className="mb-1.5 text-sm text-[#6f7b8d]">
               Follow this quick flow each session to practice efficiently:
             </p>
@@ -853,7 +902,7 @@ function InfoModal({
 
           <hr className="border-[#dee8ea]" />
           <section className="mt-4">
-            <h3 className="mb-1.5 text-lg font-semibold text-[#2d3642]">FAQs</h3>
+            <h3 className="mb-4 text-lg font-extrabold text-[#2d3642]">FAQs</h3>
             <div className="space-y-2">
               <details className="rounded-xl border border-[#d6e1e5] bg-[#f4f8f7] px-4 py-2.5">
                 <summary className="cursor-pointer list-none text-base font-semibold text-[#2d3642]">
