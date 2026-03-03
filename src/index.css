@@ -12,18 +12,15 @@ body {
   margin: 0;
   min-height: 100vh;
   font-family: "Manrope", sans-serif;
-  color: #1f2735;
-  background:
-    radial-gradient(circle at 12% 12%, rgba(255, 255, 255, 0.66), transparent 40%),
-    radial-gradient(circle at 82% 18%, rgba(255, 255, 255, 0.58), transparent 44%),
-    linear-gradient(150deg, #d4d7de 0%, #cfd4df 100%);
+  color: #2d3742;
+  background: #607B8F
 }
 
 #root {
   min-height: 100vh;
 }
 
-details > summary::-webkit-details-marker {
+details>summary::-webkit-details-marker {
   display: none;
 }
 
