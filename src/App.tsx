@@ -19,7 +19,7 @@ type ReviewMode = "all" | "incorrect" | "skipped";
 const DEFAULT_SETTINGS: AppSettings = {
   showQuestionEn: false,
   showOptionEn: false,
-  questionScope: "general",
+  questionScope: "both",
   selectedRegionCode: DEFAULT_REGION_CODE
 };
 
@@ -741,7 +741,7 @@ function InfoModal({
 }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 p-4">
-      <div className="w-full max-w-2xl rounded-3xl border border-nb-3 bg-nb-5 p-6 shadow-panel md:p-7">
+      <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl border border-nb-3 bg-nb-5 p-6 shadow-panel md:p-7">
         <div className="flex items-center justify-between gap-3">
           <h2 className="text-2xl font-extrabold text-nb-1 sm:text-3xl">Quick Instructions</h2>
           <button
@@ -761,46 +761,143 @@ function InfoModal({
           </section>
 
           <section>
-            <h3 className="mb-2 text-lg font-semibold text-nb-1">About The Exam</h3>
+            <h3 className="mb-2 text-lg font-semibold text-nb-1">What This App Helps You Do</h3>
             <p>
-              The <span className="font-bold text-nb-1">Einbürgerungstest</span> is the German
-              naturalization knowledge test, focused on society, democracy, rights, and civic life.
+              Train with the official-style question pool used for the
+              <span className="font-bold text-nb-1"> Einbürgerungstest</span> and
+              <span className="font-bold text-nb-1"> Leben in Deutschland</span> exam so you can
+              build confidence before test day.
             </p>
             <p className="mt-2">
-              Format: <span className="font-bold text-nb-1">33 questions</span> (
+              Practice the real structure:
+              <span className="font-bold text-nb-1"> 33 questions</span> (
               <span className="font-bold text-nb-1">30 general + 3 state-specific</span>) in about
-              <span className="font-bold text-nb-1"> 60 minutes</span>, with typically
-              <span className="font-bold text-nb-1"> 17 correct</span> needed to pass.
+              <span className="font-bold text-nb-1"> 60 minutes</span>, and track your readiness
+              against the common passing target of
+              <span className="font-bold text-nb-1"> 17 correct answers</span>.
             </p>
             <p className="mt-2">
-              This app uses questions from the official pool that real exam questions are drawn
-              from.
+              Use filters, review decks, and optional English support to focus on weak areas and
+              improve consistency across general and region-specific topics.
             </p>
           </section>
           <hr></hr>
           <section className="mt-4">
             <h3 className="mb-2 text-lg font-semibold text-nb-1">How To Use This App</h3>
+            <p className="mb-2 text-sm text-nb-2">
+              Follow this quick flow each session to practice efficiently:
+            </p>
             <ul className="space-y-1.5">
               <li>
-                Choose <span className="font-bold text-nb-1">General only</span>,
+                <span className="font-bold text-nb-1">1. Choose your scope:</span> Select
+                <span className="font-bold text-nb-1"> General only</span>,
                 <span className="font-bold text-nb-1"> Region only</span>, or
-                <span className="font-bold text-nb-1"> Both</span>.
+                <span className="font-bold text-nb-1"> Both</span>, then pick your region.
               </li>
               <li>
-                Answer by mouse or keys <span className="font-bold text-nb-1">1-4</span>.
+                <span className="font-bold text-nb-1">2. Answer each question:</span> Click an
+                option or use keys <span className="font-bold text-nb-1">1-4</span> for fast
+                practice.
               </li>
               <li>
-                Navigate with <span className="font-bold text-nb-1">Left/Right</span>, and press
-                <span className="font-bold text-nb-1"> S</span> to skip.
+                <span className="font-bold text-nb-1">3. Move quickly:</span> Use
+                <span className="font-bold text-nb-1"> Left/Right</span> to navigate and
+                <span className="font-bold text-nb-1"> S</span> to skip uncertain questions.
               </li>
               <li>
-                Review with <span className="font-bold text-nb-1">Incorrect</span> and
-                <span className="font-bold text-nb-1"> Skipped</span> decks.
+                <span className="font-bold text-nb-1">4. Focus weak spots:</span> Switch to
+                <span className="font-bold text-nb-1"> Incorrect</span> and
+                <span className="font-bold text-nb-1"> Skipped</span> decks for targeted review.
               </li>
               <li>
-                Progress is saved automatically, including scope and selected region.
+                <span className="font-bold text-nb-1">5. Continue anytime:</span> Your progress is
+                saved automatically, including scope and selected region. The data is saved in your local
+                browser only, thus helping you track your personal learning journey while respecting your privacy.
               </li>
             </ul>
+          </section>
+
+          <hr></hr>
+          <section className="mt-4">
+            <h3 className="mb-2 text-lg font-semibold text-nb-1">FAQs</h3>
+            <div className="space-y-2">
+              <details className="rounded-xl border border-nb-3 bg-nb-6 px-4 py-3">
+                <summary className="cursor-pointer list-none text-base font-semibold text-nb-1">
+                  What is the difference between "Leben in Deutschland" and the
+                  "Einbürgerungstest"?
+                </summary>
+                <div className="mt-2 border-t border-nb-3 pt-2 text-sm leading-6 text-nb-2">
+                  <p>
+                    They use the same official BAMF question catalog and test format (33 questions,
+                    60 minutes). The practical difference is the purpose and passing threshold:
+                    15/33 is enough for the orientation course completion, while 17/33 is needed
+                    to prove naturalization knowledge requirements.
+                  </p>
+                  <p className="mt-2">
+                    Official references:
+                    {" "}
+                    <a
+                      href="https://www.bamf.de/DE/Themen/Integration/ZugewanderteTeilnehmende/Integrationskurse/Abschlusspruefung/abschlusspruefung-node.html"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="font-semibold text-nb-4 underline underline-offset-2"
+                    >
+                      BAMF Abschlussprüfung
+                    </a>
+                    {" "}
+                    and
+                    {" "}
+                    <a
+                      href="https://www.bamf.de/DE/Themen/Integration/ZugewanderteTeilnehmende/OnlineTestcenter/online-testcenter-node.html"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="font-semibold text-nb-4 underline underline-offset-2"
+                    >
+                      BAMF Online-Testcenter
+                    </a>
+                    .
+                  </p>
+                </div>
+              </details>
+
+              <details className="rounded-xl border border-nb-3 bg-nb-6 px-4 py-3">
+                <summary className="cursor-pointer list-none text-base font-semibold text-nb-1">
+                  What is the purpose of this test?
+                </summary>
+                <div className="mt-2 border-t border-nb-3 pt-2 text-sm leading-6 text-nb-2">
+                  <p>
+                    The test checks knowledge about the legal and social order and living
+                    conditions in Germany. For naturalization, this knowledge is a legal
+                    requirement, and BAMF states that at least 17 correct answers are used as
+                    proof for that requirement.
+                  </p>
+                  <p className="mt-2">
+                    Official references:
+                    {" "}
+                    <a
+                      href="https://www.bamf.de/DE/Themen/Integration/ZugewanderteTeilnehmende/Integrationskurse/Abschlusspruefung/abschlusspruefung-node.html"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="font-semibold text-nb-4 underline underline-offset-2"
+                    >
+                      BAMF explanation of test purpose and thresholds
+                    </a>
+                    {" "}
+                    and
+                    {" "}
+                    <a
+                      href="https://www.gesetze-im-internet.de/inttestv/__10.html"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="font-semibold text-nb-4 underline underline-offset-2"
+                    >
+                      IntTestV §10
+                    </a>
+                    .
+                  </p>
+                </div>
+              </details>
+            </div>
           </section>
         </div>
       </div>
