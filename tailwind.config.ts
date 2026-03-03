@@ -5,8 +5,8 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Lato", "sans-serif"],
-        serif: ["Lato", "sans-serif"]
+        sans: ["Manrope", "sans-serif"],
+        serif: ["Manrope", "sans-serif"]
       },
       colors: {
         nb: {
@@ -14,7 +14,7 @@ const config: Config = {
           2: "#52606D", // secondary text
           3: "#D8E1EB", // borders/dividers
           4: "#4F6373", // primary accent (buttons/focus)
-          5: "#FFFFFF", // base surface
+          5: "#D1DEE3", // base surface
           6: "#F6F8FB", // elevated/alt surface
           7: "#EAF1FF", // selected/soft accent background
           8: "#2D8A54", // success

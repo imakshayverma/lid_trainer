@@ -286,177 +286,176 @@ function App() {
         : `General + ${selectedRegionName}`;
 
   return (
-    <div className="mx-auto min-h-screen w-full max-w-6xl px-4 pb-10 pt-6 font-sans md:px-8">
-      <header className="flex items-start justify-between gap-4 animate-rise">
-        <div>
-          <h1 className="text-2xl font-bold text-nb-1 md:text-5xl">
-            Naturalization Test Trainer
-          </h1>
-          <p className="mt-2 text-lg font-light tracking-wide text-nb-1">
-            Einbürgerungstest and Leben in Deutschland Exam Trainer
-          </p>
-        </div>
-        <button
-          type="button"
-          onClick={() => setInfoOpen(true)}
-          aria-label="Open instructions"
-          className="rounded-full border border-nb-3 bg-nb-5 p-2 text-nb-2 shadow-card transition hover:border-nb-4 hover:bg-nb-6"
-        >
-          <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-            <circle cx="10" cy="10" r="8" stroke="currentColor" strokeWidth="1.4" />
-            <path d="M10 9V14" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-            <circle cx="10" cy="6.5" r="1" fill="currentColor" />
-          </svg>
-
-        </button>
-      </header>
-
-      <main className="mt-6 rounded-[5px] border border-nb-3 bg-nb-5 p-3 shadow-panel sm:p-5 md:p-8">
-        {!activeQuestion ? (
-          <EmptyDeck
-            hasScopedQuestions={scopedIds.length > 0}
-            reviewMode={reviewMode}
-            onReturnToAll={() => {
-              setReviewMode("all");
-              setCurrentIndex(0);
-            }}
-          />
-        ) : (
-          <>
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-wide text-nb-4 sm:text-sm">
-                  {activeQuestion.category}
-                </p>
-                <p className="mt-1 text-xs font-medium text-nb-2 sm:text-sm">
-                  Question {answeredPosition} / {activeIds.length}
-                </p>
-              </div>
-              <ProgressPill status={currentProgress?.status} />
+    <div className="min-h-screen px-2 py-3 text-[#2d3742] md:px-5 md:py-5">
+      <div className="mx-auto max-w-7xl space-y-3">
+        <header className="animate-rise rounded-xl border border-[#d7e2e5] bg-[#fffdf9] p-4 shadow-[0_20px_34px_-32px_rgba(49,62,78,0.45)] sm:p-5">
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p className="text-xs font-light uppercase tracking-[0.18em] text-[#7a8898]">
+                DECKTERS LABS
+              </p>
+              <h1 className="mt-0.5 text-2xl font-extrabold tracking-tight text-[#2d3642] md:text-3xl">
+                Naturalization Test Trainer
+              </h1>
+              <p className="mt-0.5 text-sm font-medium text-[#6f7b8d] md:text-base">
+                Practice Einbuergerungstest and Leben in Deutschland with one focused workflow.
+              </p>
             </div>
 
-            <article className="mt-4 rounded border border-nb-3 bg-nb-6 p-4 shadow-card sm:mt-5 sm:p-5 md:p-6">
-              <h2 className="text-base font-bold leading-snug text-nb-1 sm:text-lg">
-                {activeQuestion.question.de}
-              </h2>
-              {settings.showQuestionEn && activeQuestion.question.en ? (
-                <p className="mt-2 text-sm font-normal leading-relaxed text-nb-2 sm:text-base">
-                  {activeQuestion.question.en}
-                </p>
-              ) : null}
-            </article>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setInfoOpen(true)}
+                aria-label="Open instructions"
+                className="rounded-lg border border-[#d3e1ea] bg-[#E5BA41] px-3 py-2 text-sm font-semibold text-[#00000] transition hover:border-[#c4d6e2] hover:bg-[#e2edf5]"
+              >
+                Instructions
+              </button>
+            </div>
+          </div>
+        </header>
 
-            <div className="mt-4 grid gap-2.5 sm:mt-5 sm:gap-3">
-              {activeQuestion.options.de.map((optionDe, index) => {
-                const optionEn = activeQuestion.options.en[index];
-                const isSelected = currentProgress?.selectedIndex === index;
-                const isCorrect = index === activeQuestion.correctIndex;
-                const showCorrectHighlight = showAnswerFeedback && isCorrect;
-                const showIncorrectHighlight =
-                  showAnswerFeedback &&
-                  currentProgress?.status === "incorrect" &&
-                  isSelected &&
-                  !isCorrect;
+        <div className="grid gap-3 xl:grid-cols-[minmax(0,1.65fr)_minmax(340px,1fr)]">
+          <section className="animate-rise rounded-xl border border-[#d7e2e5] bg-[#fffdf9] p-3 shadow-[0_20px_34px_-32px_rgba(49,62,78,0.45)] sm:p-4">
+            {!activeQuestion ? (
+              <EmptyDeck
+                hasScopedQuestions={scopedIds.length > 0}
+                reviewMode={reviewMode}
+                onReturnToAll={() => {
+                  setReviewMode("all");
+                  setCurrentIndex(0);
+                }}
+              />
+            ) : (
+              <>
+                <div className="-mx-3 -mt-3 flex flex-wrap items-center justify-between gap-2.5 rounded-t-xl border-b border-[#cedde1] bg-[#afc9aa] px-3 py-4 sm:-mx-4 sm:-mt-4 sm:px-4 sm:py-4">
+                  <div>
+                    <p className="text-lg font-extrabold tracking-tight text-[#2c3642] sm:text-xl">
+                      {activeQuestion.category}
+                    </p>
+                    <p className="mt-0.5 text-xs font-light sm:text-sm">
+                      Question {answeredPosition} / {activeIds.length}
+                    </p>
+                  </div>
+                  <ProgressPill status={currentProgress?.status} />
+                </div>
 
-                return (
+                <article className="mt-2.5 rounded-xl border border-[#dbe5e8] bg-[#f4f8f7] p-3 sm:mt-3 sm:p-4">
+                  <h2 className="text-base font-bold leading-snug text-[#2a3440] sm:text-lg">
+                    {activeQuestion.question.de}
+                  </h2>
+                  {settings.showQuestionEn && activeQuestion.question.en ? (
+                    <p className="mt-1.5 text-sm font-light leading-relaxed text-[#6f7b8d] sm:text-base">
+                      {activeQuestion.question.en}
+                    </p>
+                  ) : null}
+                </article>
+
+                <div className="mt-3 grid gap-2 sm:mt-4 sm:gap-2.5">
+                  {activeQuestion.options.de.map((optionDe, index) => {
+                    const optionEn = activeQuestion.options.en[index];
+                    const isSelected = currentProgress?.selectedIndex === index;
+                    const isCorrect = index === activeQuestion.correctIndex;
+                    const showCorrectHighlight = showAnswerFeedback && isCorrect;
+                    const showIncorrectHighlight =
+                      showAnswerFeedback &&
+                      currentProgress?.status === "incorrect" &&
+                      isSelected &&
+                      !isCorrect;
+
+                    return (
+                      <button
+                        type="button"
+                        key={`${activeQuestion.id}-option-${index}`}
+                        onClick={() => chooseAnswer(activeQuestion, index)}
+                        className={classNames(
+                          "w-full rounded-xl border px-3 py-2.5 text-left transition duration-200 sm:px-3.5 sm:py-3",
+                          "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#547792]",
+                          showCorrectHighlight && "border-[#bfdcc5] bg-[#edf7ef] text-[#2d3742]",
+                          showIncorrectHighlight && "border-[#e9c5c2] bg-[#fdf2f2] text-[#2d3742]",
+                          !showCorrectHighlight &&
+                          !showIncorrectHighlight &&
+                          isSelected &&
+                          "border-[#c6d6e2] bg-[#eef5f8] text-[#2d3742]",
+                          !showCorrectHighlight &&
+                          !showIncorrectHighlight &&
+                          !isSelected &&
+                          "border-[#dbe5e8] bg-[#fffdf9] text-[#2d3742] hover:border-[#c7d6dd] hover:bg-[#f7fbfa]"
+                        )}
+                      >
+                        <div className="flex items-start gap-3">
+                          <span className="mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-xl bg-[#547792] text-xs font-bold text-white sm:text-sm">
+                            {index + 1}
+                          </span>
+                          <div>
+                            <p className="text-sm font-semibold leading-relaxed text-[#2a3440] sm:text-base">
+                              {optionDe}
+                            </p>
+                            {settings.showOptionEn && optionEn ? (
+                              <p className="mt-0.5 text-xs font-light normal-case text-[#7b8899] sm:text-sm">{optionEn}</p>
+                            ) : null}
+                          </div>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <nav className="sticky bottom-2 z-20 mt-3 grid grid-cols-3 gap-1.5 rounded-xl border border-[#dbe5e8] bg-[#fffdf9]/95 p-1.5 backdrop-blur-sm sm:static sm:mt-4 sm:flex sm:flex-wrap sm:items-center sm:gap-2 sm:rounded-none sm:border-0 sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
                   <button
                     type="button"
-                    key={`${activeQuestion.id}-option-${index}`}
-                    onClick={() => chooseAnswer(activeQuestion, index)}
-                    className={classNames(
-                      "w-full rounded-xl border px-3 py-3 text-left transition duration-200 shadow-card sm:rounded-2xl sm:px-4 sm:py-4",
-                      "focus:outline-none focus-visible:ring-2 focus-visible:ring-nb-4",
-                      showCorrectHighlight && "border-nb-8 bg-nb-8/10 text-nb-1",
-                      showIncorrectHighlight && "border-nb-9/70 bg-nb-9/10 text-nb-1",
-                      !showCorrectHighlight &&
-                      !showIncorrectHighlight &&
-                      isSelected &&
-                      "border-nb-4 bg-nb-7 text-nb-1",
-                      !showCorrectHighlight &&
-                      !showIncorrectHighlight &&
-                      !isSelected &&
-                      "border-nb-3 bg-nb-5 text-nb-1 hover:border-nb-4 hover:bg-nb-6"
-                    )}
+                    onClick={() => setCurrentIndex((prev) => Math.max(prev - 1, 0))}
+                    disabled={currentIndex === 0}
+                    className="w-full rounded-xl border border-[#d6e1e5] bg-[#fffdf9] px-2.5 py-2 text-sm font-semibold text-[#3c4b5e] transition hover:border-[#c2d2d9] hover:bg-[#f4f9f7] disabled:cursor-not-allowed disabled:opacity-45 sm:w-auto sm:px-3.5 sm:py-2"
                   >
-                    <div className="flex items-start gap-3">
-                      <span className="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-nb-4 text-xs font-bold text-white sm:h-7 sm:w-7 sm:text-sm">
-                        {index + 1}
-                      </span>
-                      <div>
-                        <p className="text-sm font-semibold leading-relaxed text-nb-1 sm:text-base">
-                          {optionDe}
-                        </p>
-                        {settings.showOptionEn && optionEn ? (
-                          <p className="mt-1 text-xs font-normal normal-case text-nb-2 sm:text-sm">{optionEn}</p>
-                        ) : null}
-                      </div>
-                    </div>
+                    Previous
                   </button>
-                );
-              })}
-            </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      markProgress(activeQuestion.id, "skipped", null);
+                      if (currentIndex < activeIds.length - 1) {
+                        setCurrentIndex((prev) => prev + 1);
+                      }
+                    }}
+                    className="w-full rounded-xl border border-[#d2e0e8] bg-[#eaf3f8] px-2.5 py-2 text-sm font-semibold text-[#4f6f88] transition hover:border-[#c0d3de] hover:bg-[#e2edf5] sm:w-auto sm:px-3.5 sm:py-2"
+                  >
+                    Skip
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (activeQuestion) {
+                        markUnansweredAsSkipped(activeQuestion.id);
+                      }
+                      setCurrentIndex((prev) => Math.min(prev + 1, activeIds.length - 1));
+                    }}
+                    disabled={currentIndex === activeIds.length - 1}
+                    className="w-full rounded-xl border border-[#547792] bg-[#547792] px-2.5 py-2 text-sm font-semibold text-white transition hover:bg-[#7895ad] disabled:cursor-not-allowed disabled:opacity-45 sm:w-auto sm:px-3.5 sm:py-2"
+                  >
+                    Next
+                  </button>
+                </nav>
+              </>
+            )}
+          </section>
 
-            <nav className="sticky bottom-2 z-20 mt-5 grid grid-cols-3 gap-2 rounded-2xl border border-nb-3 bg-nb-5/95 p-2 shadow-card backdrop-blur-sm sm:static sm:mt-6 sm:flex sm:flex-wrap sm:items-center sm:gap-3 sm:rounded-none sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none sm:backdrop-blur-none">
-              <button
-                type="button"
-                onClick={() => setCurrentIndex((prev) => Math.max(prev - 1, 0))}
-                disabled={currentIndex === 0}
-                className="w-full rounded-xl border border-nb-3 bg-nb-5 px-2.5 py-2.5 text-sm font-semibold text-nb-1 transition hover:border-nb-4 hover:bg-nb-6 disabled:cursor-not-allowed disabled:opacity-45 sm:w-auto sm:px-4 sm:py-2"
-              >
-                Previous
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  markProgress(activeQuestion.id, "skipped", null);
-                  if (currentIndex < activeIds.length - 1) {
-                    setCurrentIndex((prev) => prev + 1);
-                  }
-                }}
-                className="w-full rounded-xl border border-nb-4/45 bg-nb-7 px-2.5 py-2.5 text-sm font-semibold text-nb-4 transition hover:border-nb-4 hover:bg-nb-7/70 sm:w-auto sm:px-4 sm:py-2"
-              >
-                Skip
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  if (activeQuestion) {
-                    markUnansweredAsSkipped(activeQuestion.id);
-                  }
-                  setCurrentIndex((prev) => Math.min(prev + 1, activeIds.length - 1));
-                }
-                }
-                disabled={currentIndex === activeIds.length - 1}
-                className="w-full rounded-xl border border-nb-3 bg-nb-5 px-2.5 py-2.5 text-sm font-semibold text-nb-1 transition hover:border-nb-4 hover:bg-nb-6 disabled:cursor-not-allowed disabled:opacity-45 sm:w-auto sm:px-4 sm:py-2"
-              >
-                Next
-              </button>
-            </nav>
-          </>
-        )}
-      </main>
+          <aside className="grid gap-3 md:grid-cols-2 xl:grid-cols-1">
+            <section className="rounded-xl border border-[#d7e2e5] bg-[#fffdf9] p-4 shadow-[0_20px_34px_-32px_rgba(49,62,78,0.45)] sm:p-4">
+              <div className="-mx-4 -mt-4 rounded-t-xl border-b border-[#c9dadf] bg-[#eecd72] px-4 py-2.5">
+                <h3 className="text-xl font-extrabold tracking-tight text-[#2c3642] sm:text-2xl">
+                  Configuration
+                </h3>
+                <p className="mt-0.5 text-sm font-light ">
+                  Tune scope, region, review decks, and translation support.
+                </p>
+              </div>
 
-      <section className="mt-2 overflow-hidden rounded-[5px] border border-nb-3 shadow-panel">
-        <div className="bg-nb-1 px-5 py-5 md:px-7">
-          <p className="max-w-5xl text-sm font-medium leading-relaxed text-white/85">
-            Practice by category, revisit incorrect questions, and switch English assistance when
-            needed. Select whether you want only general questions, only state-specific questions,
-            or a combined set.
-          </p>
-        </div>
-        <div className="bg-nb-6 p-5 md:p-6">
-          <div className="grid gap-4 lg:grid-cols-[1.2fr_1fr]">
-            <div className="rounded-[20px] border border-nb-3 bg-nb-5 p-5 shadow-card md:p-6">
-              <h3 className="text-xl font-extrabold tracking-tight text-nb-1 sm:text-2xl">Configuration</h3>
-              <p className="mt-1 text-sm font-normal text-nb-2">
-                Control region filters, deck scope, and translations.
-              </p>
-
-              <div className="mt-4">
-                <p className="text-xs font-semibold uppercase tracking-wide text-nb-2">
+              <div className="mt-3">
+                <p className="text-xs font-semibold uppercase tracking-wide text-[#7a8898]">
                   Question set
                 </p>
-                <div className="mt-2 flex flex-wrap gap-2">
+                <div className="mt-1.5 flex flex-wrap gap-1.5">
                   <ScopeButton
                     active={settings.questionScope === "general"}
                     label="General only"
@@ -474,11 +473,11 @@ function App() {
                   />
                 </div>
               </div>
-
-              <div className="mt-4">
+              <hr className="mt-4 mb-2"></hr>
+              <div className="mt-3">
                 <label
                   htmlFor="region-select"
-                  className="text-xs font-semibold uppercase tracking-wide text-nb-2"
+                  className="text-xs font-semibold uppercase tracking-wide text-[#7a8898]"
                 >
                   Region
                 </label>
@@ -493,7 +492,7 @@ function App() {
                     setCurrentIndex(0);
                     setReviewMode("all");
                   }}
-                  className="mt-2 w-full rounded-xl border border-nb-3 bg-nb-5 px-3 py-2 text-sm font-medium text-nb-1 shadow-card focus:border-nb-4 focus:outline-none focus:ring-2 focus:ring-nb-4/20"
+                  className="mt-1.5 w-full rounded-xl border border-[#d6e1e5] bg-[#f4f8f7] px-3 py-2 text-sm font-semibold text-[#2d3742] focus:border-[#547792] focus:outline-none focus:ring-2 focus:ring-[#547792]/25"
                 >
                   {REGION_OPTIONS.map((region) => (
                     <option value={region.code} key={region.code}>
@@ -503,7 +502,7 @@ function App() {
                 </select>
               </div>
 
-              <div className="mt-4 flex flex-wrap gap-2">
+              <div className="mt-3 flex flex-wrap gap-1.5">
                 <DeckButton
                   active={reviewMode === "all"}
                   label={`All (${scopedIds.length})`}
@@ -529,8 +528,14 @@ function App() {
                   }}
                 />
               </div>
-
-              <div className="mt-5 grid gap-3 md:grid-cols-2">
+              <hr className="mt-4 mb-4"></hr>
+              <div className="mt-3 grid gap-2">
+                <label
+                  htmlFor="region-select"
+                  className="text-xs font-semibold uppercase tracking-wide text-[#7a8898]"
+                >
+                  Language Translations
+                </label>
                 <ToggleSwitch
                   checked={settings.showQuestionEn}
                   label="Show English question"
@@ -546,27 +551,87 @@ function App() {
                   }
                 />
               </div>
-            </div>
+            </section>
 
-            <div className="rounded-[20px] border border-nb-3 bg-nb-5 p-5 shadow-card md:p-6">
-              <h3 className="text-xl font-extrabold tracking-tight text-nb-1 sm:text-2xl">Progress</h3>
-              <div className="mt-4 grid grid-cols-2 gap-3">
+            <section className="rounded-xl border border-[#d7e2e5] bg-[#fffdf9] p-4 shadow-[0_20px_34px_-32px_rgba(49,62,78,0.45)] sm:p-4">
+              <div className="-mx-4 -mt-4 rounded-t-xl bg-[#eecd72] px-4 py-2.5">
+                <h3 className="text-xl font-extrabold tracking-tight text-[#2c3642] sm:text-2xl">
+                  Progress
+                </h3>
+                <p className="mt-0.5 text-sm font-light">
+                  Track outcomes and return to your weak areas quickly.
+                </p>
+              </div>
+              <div className="mt-3 grid grid-cols-2 gap-2">
                 <StatCard label="Correct" value={stats.correct} />
                 <StatCard label="Incorrect" value={stats.incorrect} />
                 <StatCard label="Skipped" value={stats.skipped} />
                 <StatCard label="Unseen" value={stats.unseen} />
               </div>
+              <div className="mt-3 rounded-xl border border-[#d6e1e5] bg-[#f4f8f7] px-3 py-1.5 text-sm font-semibold text-[#5a687b]">
+                Current set: {scopeLabel}
+              </div>
               <button
                 type="button"
                 onClick={resetProgress}
-                className="mt-5 rounded-xl border border-nb-3 bg-nb-5 px-4 py-2 text-sm font-semibold text-nb-1 shadow-card transition hover:border-nb-4 hover:bg-nb-6"
+                className="mt-3 rounded-lg border border-[#e9c9c5] bg-[#BF092F] px-4 py-2 text-sm font-semibold text-[#FFF0F0] transition hover:bg-[#fbe8e6]"
               >
                 Reset progress
               </button>
-            </div>
-          </div>
+            </section>
+          </aside>
         </div>
-      </section>
+
+        <footer className="overflow-hidden rounded-xl border border-[#36414b] shadow-[0_16px_30px_-26px_rgba(20,26,34,0.85)]">
+          <div className="border-t border-[#4a5560] bg-[#313b46] px-4 py-4 text-center text-white sm:py-4">
+            <p className="text-lg font-thin text-white/85">Designed and VibeCoded by-</p>
+            <h4 className="mt-1 text-2xl font-extrabold tracking-tight sm:text-2xl">
+              Akshay Verma
+            </h4>
+            <div className="mt-3 flex items-center justify-center gap-3 text-2xl text-white/95">
+              <a
+                href="https://twitter.com/imakshayverma"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Twitter"
+                className="transition hover:text-white/70"
+              >
+                <i className="fa-brands fa-x-twitter" aria-hidden="true"></i>
+              </a>
+              <a
+                href="https://github.com/imakshayverma"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="GitHub"
+                className="transition hover:text-white/70"
+              >
+                <i className="fa-brands fa-github" aria-hidden="true"></i>
+              </a>
+              <a
+                href="https://www.instagram.com/akshayverma295/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram"
+                className="transition hover:text-white/70"
+              >
+                <i className="fa-brands fa-instagram" aria-hidden="true"></i>
+              </a>
+              <a
+                href="https://in.linkedin.com/in/imakshayverma"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="LinkedIn"
+                className="transition hover:text-white/70"
+              >
+                <i className="fa-brands fa-linkedin" aria-hidden="true"></i>
+              </a>
+            </div>
+            <p className="mt-4 text-sm font-light text-white/85">
+              Data Sourced from - <a href="https://lebenindeutsch.land/download" target="_blank">https://lebenindeutsch.land/download</a>
+            </p>
+          </div>
+        </footer>
+      </div>
 
       {infoOpen ? (
         <InfoModal
@@ -593,10 +658,10 @@ function ScopeButton({
       type="button"
       onClick={onClick}
       className={classNames(
-        "rounded-xl border px-4 py-2 text-sm font-semibold shadow-card transition",
+        "rounded-xl border px-3.5 py-1.5 text-sm font-semibold transition",
         active
-          ? "border-nb-4 bg-nb-4 text-white"
-          : "border-nb-3 bg-nb-5 text-nb-1 hover:border-nb-4 hover:bg-nb-6"
+          ? "border-[#547792] bg-[#547792] text-white shadow-[0_10px_18px_-16px_rgba(137,163,184,0.9)]"
+          : "border-[#d6e1e5] bg-[#f4f8f7] text-[#2d3742] hover:border-[#c2d2d9] hover:bg-[#f9fdfb]"
       )}
     >
       {label}
@@ -618,10 +683,10 @@ function DeckButton({
       type="button"
       onClick={onClick}
       className={classNames(
-        "rounded-xl border px-4 py-2 text-sm font-semibold shadow-card transition",
+        "rounded-lg border px-3.5 py-1.5 text-sm font-semibold transition",
         active
-          ? "border-nb-4 bg-nb-4 text-white"
-          : "border-nb-3 bg-nb-5 text-nb-1 hover:border-nb-4 hover:bg-nb-6"
+          ? "border-[#c6d6e2] bg-[#547792] text-[#FFFFFF]"
+          : "border-[#d6e1e5] bg-[#fffdf9] text-[#3d4b5e] hover:border-[#c2d2d9] hover:bg-[#f7fbfa]"
       )}
     >
       {label}
@@ -639,31 +704,39 @@ function ToggleSwitch({
   onChange: (checked: boolean) => void;
 }) {
   return (
-    <label className="flex cursor-pointer items-center justify-between rounded-xl border border-nb-3 bg-nb-6 px-4 py-3 shadow-card">
-      <span className="text-sm font-medium text-nb-1">{label}</span>
+    <label className="flex cursor-pointer items-center justify-between rounded-xl border border-[#d6e1e5] bg-[#f4f8f7] px-3.5 py-2.5">
+      <span className="text-sm font-semibold text-[#2d3742]">{label}</span>
       <input
         type="checkbox"
         checked={checked}
         onChange={(event) => onChange(event.target.checked)}
-        className="h-4 w-4 rounded border-nb-3 bg-white text-nb-4 focus:ring-nb-4"
+        className="h-4 w-4 rounded border-[#c3d1d9] bg-white text-[#547792] focus:ring-[#547792]"
       />
     </label>
   );
 }
 
 function StatCard({ label, value }: { label: string; value: number }) {
+  const helperByLabel: Record<string, string> = {
+    Correct: "answered correctly",
+    Incorrect: "answered incorrectly",
+    Skipped: "marked skipped",
+    Unseen: "not seen yet"
+  };
+
   return (
-    <div className="rounded-xl border border-nb-3 bg-nb-6 p-3 shadow-card">
-      <p className="text-xs font-semibold uppercase tracking-wide text-nb-4">{label}</p>
-      <p className="mt-1 text-3xl font-extrabold text-nb-1">{value}</p>
-    </div>
+    <QuickMetric
+      label={label}
+      value={value.toString()}
+      helper={helperByLabel[label] ?? "question count"}
+    />
   );
 }
 
 function ProgressPill({ status }: { status?: QuestionStatus }) {
   if (!status) {
     return (
-      <span className="rounded-full border border-nb-3 bg-nb-6 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-nb-2">
+      <span className="rounded-full border border-[#d6e1e5] bg-[#f4f8f7] px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[#758394]">
         unseen
       </span>
     );
@@ -671,10 +744,10 @@ function ProgressPill({ status }: { status?: QuestionStatus }) {
 
   const palette =
     status === "correct"
-      ? "border-nb-8 bg-nb-8/10 text-nb-8"
+      ? "border-[#b9d9c0] bg-[#edf7ef] text-[#4d7856]"
       : status === "incorrect"
-        ? "border-nb-9/70 bg-nb-9/10 text-nb-9"
-        : "border-nb-4/45 bg-nb-7 text-nb-4";
+        ? "border-[#e7c2bf] bg-[#fdf2f2] text-[#98615b]"
+        : "border-[#c6d6e2] bg-[#eef5f8] text-[#4f6f88]";
 
   return (
     <span
@@ -716,16 +789,26 @@ function EmptyDeck({
           : "Switch deck to continue practicing.";
 
   return (
-    <div className="rounded-3xl border border-dashed border-nb-3 bg-nb-5 p-7 text-center">
-      <h2 className="text-3xl font-extrabold text-nb-1">{title}</h2>
-      <p className="mt-2 text-base font-normal text-nb-2">{message}</p>
+    <div className="rounded-xl border border-dashed border-[#c6d7de] bg-[#f6faf8] p-5 text-center">
+      <h2 className="text-2xl font-extrabold text-[#2d3642]">{title}</h2>
+      <p className="mt-1.5 text-base font-medium text-[#6f7b8d]">{message}</p>
       <button
         type="button"
         onClick={onReturnToAll}
-        className="mt-5 rounded-xl border border-nb-3 bg-nb-5 px-4 py-2 text-sm font-semibold text-nb-1 shadow-card transition hover:border-nb-4 hover:bg-nb-6"
+        className="mt-3 rounded-xl border border-[#d6e1e5] bg-[#fffdf9] px-4 py-1.5 text-sm font-semibold text-[#3d4b5e] transition hover:border-[#c2d2d9] hover:bg-[#f7fbfa]"
       >
         Return to all questions
       </button>
+    </div>
+  );
+}
+
+function QuickMetric({ label, value, helper }: { label: string; value: string; helper: string }) {
+  return (
+    <div className="rounded-xl border border-[#d6e1e5] bg-[#f6faf8] px-3 py-2.5 shadow-[0_14px_24px_-24px_rgba(60,74,91,0.55)]">
+      <p className="text-xs font-semibold uppercase tracking-wide text-[#7a8898]">{label}</p>
+      <p className="mt-0.5 text-2xl font-extrabold text-[#2d3642]">{value}</p>
+      <p className="mt-0.5 text-xs font-semibold text-[#8694a3]">{helper}</p>
     </div>
   );
 }
@@ -740,93 +823,93 @@ function InfoModal({
   scopeLabel: string;
 }) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 p-4">
-      <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl border border-nb-3 bg-nb-5 p-6 shadow-panel md:p-7">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#1e2a37]/20 p-4 backdrop-blur-[2px]">
+      <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl border border-[#d6e1e5] bg-[#fffdf9] p-5 shadow-[0_26px_52px_-36px_rgba(60,74,91,0.7)] md:p-6">
         <div className="flex items-center justify-between gap-3">
-          <h2 className="text-2xl font-extrabold text-nb-1 sm:text-3xl">Quick Instructions</h2>
+          <h2 className="text-2xl font-extrabold text-[#2d3642] sm:text-3xl">Quick Instructions</h2>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg border border-nb-3 bg-nb-5 px-3 py-1.5 text-sm font-semibold text-nb-1 shadow-card transition hover:border-nb-4 hover:bg-nb-6"
+            className="rounded-lg border border-[#d6e1e5] bg-[#fffdf9] px-3 py-1.5 text-sm font-semibold text-[#3d4b5e] transition hover:border-[#c2d2d9] hover:bg-[#f7fbfa]"
           >
             Close
           </button>
         </div>
-        <div className="mt-5 space-y-5 text-sm leading-7 text-nb-2 sm:text-base">
-          <section className="rounded-xl border border-nb-3 bg-nb-6 px-4 py-3">
+        <div className="mt-4 space-y-4 text-sm leading-7 text-[#6f7b8d] sm:text-base">
+          <section className="rounded-xl border border-[#d6e1e5] bg-[#f4f8f7] px-4 py-2.5">
             <p>
-              <span className="font-bold text-nb-1">Current training set:</span> {scopeLabel} (
+              <span className="font-bold text-[#2d3642]">Current training set:</span> {scopeLabel} (
               {selectedRegion})
             </p>
           </section>
 
           <section>
-            <h3 className="mb-2 text-lg font-semibold text-nb-1">What This App Helps You Do</h3>
+            <h3 className="mb-4 text-lg font-extrabold text-[#2d3642]">What This App Helps You Do</h3>
             <p>
               Train with the official-style question pool used for the
-              <span className="font-bold text-nb-1"> Einbürgerungstest</span> and
-              <span className="font-bold text-nb-1"> Leben in Deutschland</span> exam so you can
+              <span className="font-bold text-[#2d3642]"> Einbuergerungstest</span> and
+              <span className="font-bold text-[#2d3642]"> Leben in Deutschland</span> exam so you can
               build confidence before test day.
             </p>
             <p className="mt-2">
               Practice the real structure:
-              <span className="font-bold text-nb-1"> 33 questions</span> (
-              <span className="font-bold text-nb-1">30 general + 3 state-specific</span>) in about
-              <span className="font-bold text-nb-1"> 60 minutes</span>, and track your readiness
+              <span className="font-bold text-[#2d3642]"> 33 questions</span> (
+              <span className="font-bold text-[#2d3642]">30 general + 3 state-specific</span>) in about
+              <span className="font-bold text-[#2d3642]"> 60 minutes</span>, and track your readiness
               against the common passing target of
-              <span className="font-bold text-nb-1"> 17 correct answers</span>.
+              <span className="font-bold text-[#2d3642]"> 17 correct answers</span>.
             </p>
             <p className="mt-2">
               Use filters, review decks, and optional English support to focus on weak areas and
               improve consistency across general and region-specific topics.
             </p>
           </section>
-          <hr></hr>
+          <hr className="border-[#dee8ea]" />
           <section className="mt-4">
-            <h3 className="mb-2 text-lg font-semibold text-nb-1">How To Use This App</h3>
-            <p className="mb-2 text-sm text-nb-2">
+            <h3 className="mb-5 text-lg font-extrabold text-[#2d3642]">How To Use This App</h3>
+            <p className="mb-1.5 text-sm text-[#6f7b8d]">
               Follow this quick flow each session to practice efficiently:
             </p>
             <ul className="space-y-1.5">
               <li>
-                <span className="font-bold text-nb-1">1. Choose your scope:</span> Select
-                <span className="font-bold text-nb-1"> General only</span>,
-                <span className="font-bold text-nb-1"> Region only</span>, or
-                <span className="font-bold text-nb-1"> Both</span>, then pick your region.
+                <span className="font-bold text-[#2d3642]">1. Choose your scope:</span> Select
+                <span className="font-bold text-[#2d3642]"> General only</span>,
+                <span className="font-bold text-[#2d3642]"> Region only</span>, or
+                <span className="font-bold text-[#2d3642]"> Both</span>, then pick your region.
               </li>
               <li>
-                <span className="font-bold text-nb-1">2. Answer each question:</span> Click an
-                option or use keys <span className="font-bold text-nb-1">1-4</span> for fast
+                <span className="font-bold text-[#2d3642]">2. Answer each question:</span> Click an
+                option or use keys <span className="font-bold text-[#2d3642]">1-4</span> for fast
                 practice.
               </li>
               <li>
-                <span className="font-bold text-nb-1">3. Move quickly:</span> Use
-                <span className="font-bold text-nb-1"> Left/Right</span> to navigate and
-                <span className="font-bold text-nb-1"> S</span> to skip uncertain questions.
+                <span className="font-bold text-[#2d3642]">3. Move quickly:</span> Use
+                <span className="font-bold text-[#2d3642]"> Left/Right</span> to navigate and
+                <span className="font-bold text-[#2d3642]"> S</span> to skip uncertain questions.
               </li>
               <li>
-                <span className="font-bold text-nb-1">4. Focus weak spots:</span> Switch to
-                <span className="font-bold text-nb-1"> Incorrect</span> and
-                <span className="font-bold text-nb-1"> Skipped</span> decks for targeted review.
+                <span className="font-bold text-[#2d3642]">4. Focus weak spots:</span> Switch to
+                <span className="font-bold text-[#2d3642]"> Incorrect</span> and
+                <span className="font-bold text-[#2d3642]"> Skipped</span> decks for targeted review.
               </li>
               <li>
-                <span className="font-bold text-nb-1">5. Continue anytime:</span> Your progress is
+                <span className="font-bold text-[#2d3642]">5. Continue anytime:</span> Your progress is
                 saved automatically, including scope and selected region. The data is saved in your local
                 browser only, thus helping you track your personal learning journey while respecting your privacy.
               </li>
             </ul>
           </section>
 
-          <hr></hr>
+          <hr className="border-[#dee8ea]" />
           <section className="mt-4">
-            <h3 className="mb-2 text-lg font-semibold text-nb-1">FAQs</h3>
+            <h3 className="mb-4 text-lg font-extrabold text-[#2d3642]">FAQs</h3>
             <div className="space-y-2">
-              <details className="rounded-xl border border-nb-3 bg-nb-6 px-4 py-3">
-                <summary className="cursor-pointer list-none text-base font-semibold text-nb-1">
+              <details className="rounded-xl border border-[#d6e1e5] bg-[#f4f8f7] px-4 py-2.5">
+                <summary className="cursor-pointer list-none text-base font-semibold text-[#2d3642]">
                   What is the difference between "Leben in Deutschland" and the
                   "Einbürgerungstest"?
                 </summary>
-                <div className="mt-2 border-t border-nb-3 pt-2 text-sm leading-6 text-nb-2">
+                <div className="mt-2 border-t border-[#dee8ea] pt-2 text-sm leading-6 text-[#6f7b8d]">
                   <p>
                     They use the same official BAMF question catalog and test format (33 questions,
                     60 minutes). The practical difference is the purpose and passing threshold:
@@ -840,7 +923,7 @@ function InfoModal({
                       href="https://www.bamf.de/DE/Themen/Integration/ZugewanderteTeilnehmende/Integrationskurse/Abschlusspruefung/abschlusspruefung-node.html"
                       target="_blank"
                       rel="noreferrer"
-                      className="font-semibold text-nb-4 underline underline-offset-2"
+                      className="font-semibold text-[#577893] underline underline-offset-2"
                     >
                       BAMF Abschlussprüfung
                     </a>
@@ -851,7 +934,7 @@ function InfoModal({
                       href="https://www.bamf.de/DE/Themen/Integration/ZugewanderteTeilnehmende/OnlineTestcenter/online-testcenter-node.html"
                       target="_blank"
                       rel="noreferrer"
-                      className="font-semibold text-nb-4 underline underline-offset-2"
+                      className="font-semibold text-[#577893] underline underline-offset-2"
                     >
                       BAMF Online-Testcenter
                     </a>
@@ -860,11 +943,11 @@ function InfoModal({
                 </div>
               </details>
 
-              <details className="rounded-xl border border-nb-3 bg-nb-6 px-4 py-3">
-                <summary className="cursor-pointer list-none text-base font-semibold text-nb-1">
+              <details className="rounded-xl border border-[#d6e1e5] bg-[#f4f8f7] px-4 py-2.5">
+                <summary className="cursor-pointer list-none text-base font-semibold text-[#2d3642]">
                   What is the purpose of this test?
                 </summary>
-                <div className="mt-2 border-t border-nb-3 pt-2 text-sm leading-6 text-nb-2">
+                <div className="mt-2 border-t border-[#dee8ea] pt-2 text-sm leading-6 text-[#6f7b8d]">
                   <p>
                     The test checks knowledge about the legal and social order and living
                     conditions in Germany. For naturalization, this knowledge is a legal
@@ -878,7 +961,7 @@ function InfoModal({
                       href="https://www.bamf.de/DE/Themen/Integration/ZugewanderteTeilnehmende/Integrationskurse/Abschlusspruefung/abschlusspruefung-node.html"
                       target="_blank"
                       rel="noreferrer"
-                      className="font-semibold text-nb-4 underline underline-offset-2"
+                      className="font-semibold text-[#577893] underline underline-offset-2"
                     >
                       BAMF explanation of test purpose and thresholds
                     </a>
@@ -889,7 +972,7 @@ function InfoModal({
                       href="https://www.gesetze-im-internet.de/inttestv/__10.html"
                       target="_blank"
                       rel="noreferrer"
-                      className="font-semibold text-nb-4 underline underline-offset-2"
+                      className="font-semibold text-[#577893] underline underline-offset-2"
                     >
                       IntTestV §10
                     </a>
