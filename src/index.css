@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -11,9 +11,20 @@
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: "Lato", sans-serif;
-  color: #2f3742;
-  background: rgb(233, 234, 229);
+  font-family: "Manrope", sans-serif;
+  color: #1f2735;
+  background:
+    radial-gradient(circle at 12% 12%, rgba(255, 255, 255, 0.66), transparent 40%),
+    radial-gradient(circle at 82% 18%, rgba(255, 255, 255, 0.58), transparent 44%),
+    linear-gradient(150deg, #d4d7de 0%, #cfd4df 100%);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+details > summary::-webkit-details-marker {
+  display: none;
 }
 
 @keyframes rise {
