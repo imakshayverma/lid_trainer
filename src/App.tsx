@@ -16,6 +16,11 @@ import type {
 
 type ReviewMode = "all" | "incorrect" | "skipped";
 
+const QUESTION_IMAGE_URLS = import.meta.glob("../data/img/*", {
+  eager: true,
+  import: "default"
+}) as Record<string, string>;
+
 const DEFAULT_SETTINGS: AppSettings = {
   showQuestionEn: false,
   showOptionEn: false,
@@ -25,6 +30,25 @@ const DEFAULT_SETTINGS: AppSettings = {
 
 function classNames(...values: Array<string | false | null | undefined>): string {
   return values.filter(Boolean).join(" ");
+}
+
+function getQuestionImageSrc(image: string): string | null {
+  return QUESTION_IMAGE_URLS[`../data/img/${image}`] ?? null;
+}
+
+function getScopedQuestionIds(settings: AppSettings): string[] {
+  const { questionScope, selectedRegionCode } = settings;
+
+  return QUESTIONS.filter((question) => {
+    const isGeneral = question.regionCode === null;
+    if (questionScope === "general") {
+      return isGeneral;
+    }
+    if (questionScope === "region") {
+      return question.regionCode === selectedRegionCode;
+    }
+    return isGeneral || question.regionCode === selectedRegionCode;
+  }).map((question) => question.id);
 }
 
 function buildProgress(status: QuestionStatus, selectedIndex: number | null): QuestionProgress {
@@ -70,17 +94,7 @@ function App() {
   }, [regionNameByCode, settings.selectedRegionCode]);
 
   const scopedIds = useMemo(() => {
-    const { questionScope, selectedRegionCode } = settings;
-    return QUESTIONS.filter((question) => {
-      const isGeneral = question.regionCode === null;
-      if (questionScope === "general") {
-        return isGeneral;
-      }
-      if (questionScope === "region") {
-        return question.regionCode === selectedRegionCode;
-      }
-      return isGeneral || question.regionCode === selectedRegionCode;
-    }).map((question) => question.id);
+    return getScopedQuestionIds(settings);
   }, [settings]);
 
   const scopedIncorrectIds = useMemo(
@@ -273,9 +287,42 @@ function App() {
     setReviewMode("all");
   }
 
+  function getPreferredRegionIndex(nextRegionCode: string): number {
+    const nextSettings: AppSettings = {
+      ...settings,
+      selectedRegionCode: nextRegionCode
+    };
+    const nextIds = getScopedQuestionIds(nextSettings);
+
+    if (nextIds.length === 0) {
+      return 0;
+    }
+
+    const firstUnseenRegionIndex = nextIds.findIndex((id) => {
+      const question = QUESTION_LOOKUP.get(id);
+      return question?.regionCode === nextRegionCode && !progressById[id];
+    });
+    if (firstUnseenRegionIndex !== -1) {
+      return firstUnseenRegionIndex;
+    }
+
+    const firstRegionIndex = nextIds.findIndex(
+      (id) => QUESTION_LOOKUP.get(id)?.regionCode === nextRegionCode
+    );
+    if (firstRegionIndex !== -1) {
+      return firstRegionIndex;
+    }
+
+    const firstUnseenIndex = nextIds.findIndex((id) => !progressById[id]);
+    return firstUnseenIndex === -1 ? 0 : firstUnseenIndex;
+  }
+
   const showAnswerFeedback =
     currentProgress !== undefined && currentProgress.status !== "skipped";
   const answeredPosition = activeIds.length > 0 ? currentIndex + 1 : 0;
+  const activeQuestionImageSrc = activeQuestion?.image
+    ? getQuestionImageSrc(activeQuestion.image)
+    : null;
   const selectedRegionName =
     regionNameByCode.get(settings.selectedRegionCode) ?? "Selected region";
   const scopeLabel =
@@ -348,6 +395,19 @@ function App() {
                     <p className="mt-1.5 text-sm font-light leading-relaxed text-[#6f7b8d] sm:text-base">
                       {activeQuestion.question.en}
                     </p>
+                  ) : null}
+                  {activeQuestionImageSrc ? (
+                    <figure className="mt-3 overflow-hidden rounded-xl border border-[#d7e2e5] bg-[#fffdf9] p-2">
+                      <img
+                        src={activeQuestionImageSrc}
+                        alt={activeQuestion.question.de}
+                        className="mx-auto max-h-[24rem] w-full rounded-lg object-contain"
+                        loading="lazy"
+                      />
+                      <figcaption className="mt-2 text-center text-xs font-medium text-[#6f7b8d]">
+                        {activeQuestion.image}
+                      </figcaption>
+                    </figure>
                   ) : null}
                 </article>
 
@@ -485,11 +545,12 @@ function App() {
                   id="region-select"
                   value={settings.selectedRegionCode}
                   onChange={(event) => {
+                    const nextRegionCode = event.target.value;
                     setSettings((value) => ({
                       ...value,
-                      selectedRegionCode: event.target.value
+                      selectedRegionCode: nextRegionCode
                     }));
-                    setCurrentIndex(0);
+                    setCurrentIndex(getPreferredRegionIndex(nextRegionCode));
                     setReviewMode("all");
                   }}
                   className="mt-1.5 w-full rounded-xl border border-[#d6e1e5] bg-[#f4f8f7] px-3 py-2 text-sm font-semibold text-[#2d3742] focus:border-[#547792] focus:outline-none focus:ring-2 focus:ring-[#547792]/25"

@@ -1,6 +1,13 @@
+import { QUESTION_ID_SET } from "../data/questions";
 import type { PersistedState } from "../types";
 
 const STORAGE_KEY = "leben-in-deutschland-trainer.v1";
+
+function sanitizeProgressById(progressById: PersistedState["progressById"]): PersistedState["progressById"] {
+  return Object.fromEntries(
+    Object.entries(progressById).filter(([questionId]) => QUESTION_ID_SET.has(questionId))
+  );
+}
 
 export function loadState(): PersistedState | null {
   const raw = window.localStorage.getItem(STORAGE_KEY);
@@ -14,7 +21,10 @@ export function loadState(): PersistedState | null {
       console.warn("Ignoring malformed persisted state.");
       return null;
     }
-    return parsed;
+    return {
+      ...parsed,
+      progressById: sanitizeProgressById(parsed.progressById)
+    };
   } catch (error) {
     console.warn("Could not parse persisted state.", error);
     return null;

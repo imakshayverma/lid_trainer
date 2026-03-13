@@ -1,0 +1,432 @@
+[
+  {
+    "id": "21",
+    "sourceId": "21",
+    "regionCode": null,
+    "category": "Deutschland (Allgemein)",
+    "question": "Welches ist das Wappen der Bundesrepublik Deutschland?",
+    "image": "21.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/21.png",
+    "localPath": "data/img/21.png"
+  },
+  {
+    "id": "55",
+    "sourceId": "55",
+    "regionCode": null,
+    "category": "Deutschland (Allgemein)",
+    "question": "Was zeigt dieses Bild?",
+    "image": "55.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/55.png",
+    "localPath": "data/img/55.png"
+  },
+  {
+    "id": "70",
+    "sourceId": "70",
+    "regionCode": null,
+    "category": "Deutschland (Allgemein)",
+    "question": "Der deutsche Bundespräsident Gustav Heinemann gibt Helmut Schmidt 1974 die Ernennungsurkunde zum deutschen Bundeskanzler. Was gehört zu den Aufgaben des deutschen Bundespräsidenten / der deutschen Bundespräsidentin?",
+    "image": "70.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/70.png",
+    "localPath": "data/img/70.png"
+  },
+  {
+    "id": "130",
+    "sourceId": "130",
+    "regionCode": null,
+    "category": "Deutschland (Allgemein)",
+    "question": "Welcher Stimmzettel wäre bei einer Bundestagswahl gültig?",
+    "image": "130.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/130.png",
+    "localPath": "data/img/130.png"
+  },
+  {
+    "id": "176",
+    "sourceId": "176",
+    "regionCode": null,
+    "category": "Deutschland (Allgemein)",
+    "question": "Wie waren die Besatzungszonen Deutschlands nach 1945 verteilt?",
+    "image": "176.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/176.png",
+    "localPath": "data/img/176.png"
+  },
+  {
+    "id": "181",
+    "sourceId": "181",
+    "regionCode": null,
+    "category": "Deutschland (Allgemein)",
+    "question": "Was wollte Willy Brandt mit seinem Kniefall 1970 im ehemaligen jüdischen Ghetto in Warschau ausdrücken?",
+    "image": "181.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/181.png",
+    "localPath": "data/img/181.png"
+  },
+  {
+    "id": "187",
+    "sourceId": "187",
+    "regionCode": null,
+    "category": "Deutschland (Allgemein)",
+    "question": "Welcher deutsche Staat hatte eine schwarz-rot-goldene Flagge mit Hammer, Zirkel und Ährenkranz?",
+    "image": "187.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/187.png",
+    "localPath": "data/img/187.png"
+  },
+  {
+    "id": "209",
+    "sourceId": "209",
+    "regionCode": null,
+    "category": "Deutschland (Allgemein)",
+    "question": "Welches war das Wappen der Deutschen Demokratischen Republik?",
+    "image": "209.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/209.png",
+    "localPath": "data/img/209.png"
+  },
+  {
+    "id": "216",
+    "sourceId": "216",
+    "regionCode": null,
+    "category": "Deutschland (Allgemein)",
+    "question": "Welches Symbol ist im Plenarsaal des Deutschen Bundestages zu sehen?",
+    "image": "216.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/216.png",
+    "localPath": "data/img/216.png"
+  },
+  {
+    "id": "226",
+    "sourceId": "226",
+    "regionCode": null,
+    "category": "Deutschland (Allgemein)",
+    "question": "Welche ist die Flagge der Europäischen Union?",
+    "image": "226.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/226.png",
+    "localPath": "data/img/226.png"
+  },
+  {
+    "id": "235",
+    "sourceId": "235",
+    "regionCode": null,
+    "category": "Deutschland (Allgemein)",
+    "question": "Der französische Staatspräsident François Mitterrand und der deutsche Bundeskanzler Helmut Kohl gedenken in Verdun gemeinsam der Toten beider Weltkriege. Welches Ziel der Europäischen Union wird bei diesem Treffen deutlich?",
+    "image": "235.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/235.png",
+    "localPath": "data/img/235.png"
+  },
+  {
+    "id": "BW-BL_1",
+    "sourceId": "BL_1",
+    "regionCode": "BW",
+    "category": "Baden-Württemberg",
+    "question": "Welches Wappen gehört zum Bundesland Baden-Württemberg?",
+    "image": "301.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/301.png",
+    "localPath": "data/img/301.png"
+  },
+  {
+    "id": "BW-BL_8",
+    "sourceId": "BL_8",
+    "regionCode": "BW",
+    "category": "Baden-Württemberg",
+    "question": "Welches Bundesland ist Baden-Württemberg?",
+    "image": "308.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/308.png",
+    "localPath": "data/img/308.png"
+  },
+  {
+    "id": "BY-BL_1",
+    "sourceId": "BL_1",
+    "regionCode": "BY",
+    "category": "Bayern",
+    "question": "Welches Wappen gehört zum Freistaat Bayern?",
+    "image": "311.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/311.png",
+    "localPath": "data/img/311.png"
+  },
+  {
+    "id": "BY-BL_8",
+    "sourceId": "BL_8",
+    "regionCode": "BY",
+    "category": "Bayern",
+    "question": "Welches Bundesland ist Bayern?",
+    "image": "318.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/318.png",
+    "localPath": "data/img/318.png"
+  },
+  {
+    "id": "BE-BL_1",
+    "sourceId": "BL_1",
+    "regionCode": "BE",
+    "category": "Berlin",
+    "question": "Welches Wappen gehört zum Bundesland Berlin?",
+    "image": "321.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/321.png",
+    "localPath": "data/img/321.png"
+  },
+  {
+    "id": "BE-BL_8",
+    "sourceId": "BL_8",
+    "regionCode": "BE",
+    "category": "Berlin",
+    "question": "Welches Bundesland ist Berlin?",
+    "image": "328.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/328.png",
+    "localPath": "data/img/328.png"
+  },
+  {
+    "id": "BB-BL_1",
+    "sourceId": "BL_1",
+    "regionCode": "BB",
+    "category": "Brandenburg",
+    "question": "Welches Wappen gehört zum Bundesland Brandenburg?",
+    "image": "331.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/331.png",
+    "localPath": "data/img/331.png"
+  },
+  {
+    "id": "BB-BL_8",
+    "sourceId": "BL_8",
+    "regionCode": "BB",
+    "category": "Brandenburg",
+    "question": "Welches Bundesland ist Brandenburg?",
+    "image": "338.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/338.png",
+    "localPath": "data/img/338.png"
+  },
+  {
+    "id": "HB-BL_1",
+    "sourceId": "BL_1",
+    "regionCode": "HB",
+    "category": "Bremen",
+    "question": "Welches Wappen gehört zur Freien Hansestadt Bremen?",
+    "image": "341.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/341.png",
+    "localPath": "data/img/341.png"
+  },
+  {
+    "id": "HB-BL_8",
+    "sourceId": "BL_8",
+    "regionCode": "HB",
+    "category": "Bremen",
+    "question": "Welches Bundesland ist Bremen?",
+    "image": "348.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/348.png",
+    "localPath": "data/img/348.png"
+  },
+  {
+    "id": "HH-BL_1",
+    "sourceId": "BL_1",
+    "regionCode": "HH",
+    "category": "Hamburg",
+    "question": "Welches Wappen gehört zur Freien und Hansestadt Hamburg?",
+    "image": "351.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/351.png",
+    "localPath": "data/img/351.png"
+  },
+  {
+    "id": "HH-BL_8",
+    "sourceId": "BL_8",
+    "regionCode": "HH",
+    "category": "Hamburg",
+    "question": "Welches Bundesland ist Hamburg?",
+    "image": "358.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/358.png",
+    "localPath": "data/img/358.png"
+  },
+  {
+    "id": "HE-BL_1",
+    "sourceId": "BL_1",
+    "regionCode": "HE",
+    "category": "Hessen",
+    "question": "Welches Wappen gehört zum Bundesland Hessen?",
+    "image": "361.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/361.png",
+    "localPath": "data/img/361.png"
+  },
+  {
+    "id": "HE-BL_8",
+    "sourceId": "BL_8",
+    "regionCode": "HE",
+    "category": "Hessen",
+    "question": "Welches Bundesland ist Hessen?",
+    "image": "368.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/368.png",
+    "localPath": "data/img/368.png"
+  },
+  {
+    "id": "MV-BL_1",
+    "sourceId": "BL_1",
+    "regionCode": "MV",
+    "category": "Mecklenburg-Vorpommern",
+    "question": "Welches Wappen gehört zum Bundesland Mecklenburg-Vorpommern?",
+    "image": "371.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/371.png",
+    "localPath": "data/img/371.png"
+  },
+  {
+    "id": "MV-BL_8",
+    "sourceId": "BL_8",
+    "regionCode": "MV",
+    "category": "Mecklenburg-Vorpommern",
+    "question": "Welches Bundesland ist Mecklenburg-Vorpommern?",
+    "image": "378.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/378.png",
+    "localPath": "data/img/378.png"
+  },
+  {
+    "id": "NI-BL_1",
+    "sourceId": "BL_1",
+    "regionCode": "NI",
+    "category": "Niedersachsen",
+    "question": "Welches Wappen gehört zum Bundesland Niedersachsen?",
+    "image": "381.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/381.png",
+    "localPath": "data/img/381.png"
+  },
+  {
+    "id": "NI-BL_8",
+    "sourceId": "BL_8",
+    "regionCode": "NI",
+    "category": "Niedersachsen",
+    "question": "Welches Bundesland ist Niedersachsen?",
+    "image": "388.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/388.png",
+    "localPath": "data/img/388.png"
+  },
+  {
+    "id": "NW-BL_1",
+    "sourceId": "BL_1",
+    "regionCode": "NW",
+    "category": "Nordrhein-Westfalen",
+    "question": "Welches Wappen gehört zum Bundesland Nordrhein-Westfalen?",
+    "image": "391.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/391.png",
+    "localPath": "data/img/391.png"
+  },
+  {
+    "id": "NW-BL_8",
+    "sourceId": "BL_8",
+    "regionCode": "NW",
+    "category": "Nordrhein-Westfalen",
+    "question": "Welches Bundesland ist Nordrhein-Westfalen?",
+    "image": "398.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/398.png",
+    "localPath": "data/img/398.png"
+  },
+  {
+    "id": "RP-BL_1",
+    "sourceId": "BL_1",
+    "regionCode": "RP",
+    "category": "Rheinland-Pfalz",
+    "question": "Welches Wappen gehört zum Bundesland Rheinland-Pfalz?",
+    "image": "401.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/401.png",
+    "localPath": "data/img/401.png"
+  },
+  {
+    "id": "RP-BL_8",
+    "sourceId": "BL_8",
+    "regionCode": "RP",
+    "category": "Rheinland-Pfalz",
+    "question": "Welches Bundesland ist Rheinland-Pfalz?",
+    "image": "408.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/408.png",
+    "localPath": "data/img/408.png"
+  },
+  {
+    "id": "SL-BL_1",
+    "sourceId": "BL_1",
+    "regionCode": "SL",
+    "category": "Saarland",
+    "question": "Welches Wappen gehört zum Bundesland Saarland?",
+    "image": "411.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/411.png",
+    "localPath": "data/img/411.png"
+  },
+  {
+    "id": "SL-BL_8",
+    "sourceId": "BL_8",
+    "regionCode": "SL",
+    "category": "Saarland",
+    "question": "Welches Bundesland ist das Saarland?",
+    "image": "418.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/418.png",
+    "localPath": "data/img/418.png"
+  },
+  {
+    "id": "SN-BL_1",
+    "sourceId": "BL_1",
+    "regionCode": "SN",
+    "category": "Sachsen",
+    "question": "Welches Wappen gehört zum Freistaat Sachsen?",
+    "image": "421.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/421.png",
+    "localPath": "data/img/421.png"
+  },
+  {
+    "id": "SN-BL_8",
+    "sourceId": "BL_8",
+    "regionCode": "SN",
+    "category": "Sachsen",
+    "question": "Welches Bundesland ist Sachsen?",
+    "image": "428.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/428.png",
+    "localPath": "data/img/428.png"
+  },
+  {
+    "id": "ST-BL_1",
+    "sourceId": "BL_1",
+    "regionCode": "ST",
+    "category": "Sachsen-Anhalt",
+    "question": "Welches Wappen gehört zum Bundesland Sachsen-Anhalt?",
+    "image": "431.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/431.png",
+    "localPath": "data/img/431.png"
+  },
+  {
+    "id": "ST-BL_8",
+    "sourceId": "BL_8",
+    "regionCode": "ST",
+    "category": "Sachsen-Anhalt",
+    "question": "Welches Bundesland ist Sachsen-Anhalt?",
+    "image": "438.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/438.png",
+    "localPath": "data/img/438.png"
+  },
+  {
+    "id": "SH-BL_1",
+    "sourceId": "BL_1",
+    "regionCode": "SH",
+    "category": "Schleswig-Holstein",
+    "question": "Welches Wappen gehört zum Bundesland Schleswig-Holstein?",
+    "image": "441.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/441.png",
+    "localPath": "data/img/441.png"
+  },
+  {
+    "id": "SH-BL_8",
+    "sourceId": "BL_8",
+    "regionCode": "SH",
+    "category": "Schleswig-Holstein",
+    "question": "Welches Bundesland ist Schleswig-Holstein?",
+    "image": "448.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/448.png",
+    "localPath": "data/img/448.png"
+  },
+  {
+    "id": "TH-BL_1",
+    "sourceId": "BL_1",
+    "regionCode": "TH",
+    "category": "Thüringen",
+    "question": "Welches Wappen gehört zum Freistaat Thüringen?",
+    "image": "451.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/451.png",
+    "localPath": "data/img/451.png"
+  },
+  {
+    "id": "TH-BL_8",
+    "sourceId": "BL_8",
+    "regionCode": "TH",
+    "category": "Thüringen",
+    "question": "Welches Bundesland ist Thüringen?",
+    "image": "458.png",
+    "imageUrl": "https://lebenindeutsch.land/static/images/458.png",
+    "localPath": "data/img/458.png"
+  }
+]

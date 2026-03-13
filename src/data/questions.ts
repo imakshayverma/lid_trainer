@@ -7,6 +7,10 @@ interface RawDataset {
 
 const dataset = sourceData as RawDataset;
 
+function getQuestionId(raw: RawQuestion): string {
+  return raw.bundesland_code ? `${raw.bundesland_code}-${raw.id}` : raw.id;
+}
+
 function deriveCorrectIndex(raw: RawQuestion): number {
   const byGerman = raw.options.de.findIndex(
     (option) => option === raw.correct_answer.de
@@ -31,8 +35,9 @@ function deriveCorrectIndex(raw: RawQuestion): number {
 export const QUESTIONS: Question[] = dataset.questions.map((raw) => {
   const fallbackEnglish = raw.options.de.map(() => "");
   return {
-    id: raw.id,
+    id: getQuestionId(raw),
     category: raw.category,
+    image: raw.image,
     regionCode: raw.bundesland_code ?? null,
     question: raw.question,
     options: {
@@ -65,3 +70,4 @@ export const DEFAULT_REGION_CODE = regionMap.has(BERLIN_REGION_CODE)
   : REGION_OPTIONS[0]?.code ?? "";
 
 export const QUESTION_LOOKUP = new Map(QUESTIONS.map((question) => [question.id, question]));
+export const QUESTION_ID_SET = new Set(QUESTIONS.map((question) => question.id));

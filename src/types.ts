@@ -20,6 +20,7 @@ export interface RawQuestion {
 export interface Question {
   id: string;
   category: string;
+  image?: string;
   regionCode: string | null;
   question: {
     de: string;
