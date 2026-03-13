@@ -72,6 +72,7 @@ function App() {
   const [reviewMode, setReviewMode] = useState<ReviewMode>("all");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [infoOpen, setInfoOpen] = useState(!persisted);
+  const [jumpQuestionInput, setJumpQuestionInput] = useState("");
   const hasPickedInitialQuestionRef = useRef(false);
 
   const regionNameByCode = useMemo(
@@ -173,6 +174,41 @@ function App() {
   }, [activeIds, currentIndex]);
 
   useEffect(() => {
+    if (!activeQuestion) {
+      return;
+    }
+    if (reviewMode === "skipped") {
+      return;
+    }
+
+    const progress = progressById[activeQuestion.id];
+    if (
+      !progress ||
+      progress.status !== "skipped" ||
+      progress.selectedIndex !== null ||
+      progress.attempts !== 0
+    ) {
+      return;
+    }
+
+    setProgressById((previous) => {
+      const current = previous[activeQuestion.id];
+      if (
+        !current ||
+        current.status !== "skipped" ||
+        current.selectedIndex !== null ||
+        current.attempts !== 0
+      ) {
+        return previous;
+      }
+
+      const next = { ...previous };
+      delete next[activeQuestion.id];
+      return next;
+    });
+  }, [activeQuestion, progressById, reviewMode]);
+
+  useEffect(() => {
     saveState({ progressById, settings });
   }, [progressById, settings]);
 
@@ -271,6 +307,29 @@ function App() {
     });
   }
 
+  function markQuestionsAsSkipped(questionIds: string[]) {
+    setProgressById((previous) => {
+      const next = { ...previous };
+      let hasChanges = false;
+
+      for (const questionId of questionIds) {
+        if (next[questionId]) {
+          continue;
+        }
+
+        next[questionId] = {
+          status: "skipped",
+          selectedIndex: null,
+          attempts: 0,
+          updatedAt: new Date().toISOString()
+        };
+        hasChanges = true;
+      }
+
+      return hasChanges ? next : previous;
+    });
+  }
+
   function resetProgress() {
     const confirmed = window.confirm("Reset all saved progress?");
     if (!confirmed) {
@@ -298,23 +357,40 @@ function App() {
       return 0;
     }
 
-    const firstUnseenRegionIndex = nextIds.findIndex((id) => {
-      const question = QUESTION_LOOKUP.get(id);
-      return question?.regionCode === nextRegionCode && !progressById[id];
-    });
-    if (firstUnseenRegionIndex !== -1) {
-      return firstUnseenRegionIndex;
-    }
+    const currentScopedIndex = activeQuestion ? scopedIds.indexOf(activeQuestion.id) : -1;
+    if (currentScopedIndex !== -1) {
+      const sameQuestionIndex = nextIds.indexOf(activeQuestion!.id);
+      if (sameQuestionIndex !== -1) {
+        return sameQuestionIndex;
+      }
 
-    const firstRegionIndex = nextIds.findIndex(
-      (id) => QUESTION_LOOKUP.get(id)?.regionCode === nextRegionCode
-    );
-    if (firstRegionIndex !== -1) {
-      return firstRegionIndex;
+      return Math.min(currentScopedIndex, nextIds.length - 1);
     }
 
     const firstUnseenIndex = nextIds.findIndex((id) => !progressById[id]);
     return firstUnseenIndex === -1 ? 0 : firstUnseenIndex;
+  }
+
+  function jumpToQuestion() {
+    const parsed = Number.parseInt(jumpQuestionInput, 10);
+    if (!Number.isInteger(parsed)) {
+      return;
+    }
+
+    const targetIndex = parsed - 1;
+    if (targetIndex < 0 || targetIndex >= scopedIds.length) {
+      return;
+    }
+
+    const currentScopedIndex = activeQuestion ? scopedIds.indexOf(activeQuestion.id) : -1;
+
+    if (currentScopedIndex !== -1 && targetIndex > currentScopedIndex) {
+      markQuestionsAsSkipped(scopedIds.slice(currentScopedIndex, targetIndex));
+    }
+
+    setReviewMode("all");
+    setCurrentIndex(targetIndex);
+    setJumpQuestionInput(parsed.toString());
   }
 
   const showAnswerFeedback =
@@ -588,6 +664,43 @@ function App() {
                     setCurrentIndex(0);
                   }}
                 />
+              </div>
+              <div className="mt-4 rounded-xl border border-[#d6e1e5] bg-[#f4f8f7] p-3">
+                <label
+                  htmlFor="jump-question-number"
+                  className="text-xs font-semibold uppercase tracking-wide text-[#7a8898]"
+                >
+                  Jump to question
+                </label>
+                <form
+                  className="mt-1.5 flex gap-2"
+                  onSubmit={(event) => {
+                    event.preventDefault();
+                    jumpToQuestion();
+                  }}
+                >
+                  <input
+                    id="jump-question-number"
+                    type="number"
+                    min={1}
+                    max={scopedIds.length || 1}
+                    value={jumpQuestionInput}
+                    onChange={(event) => setJumpQuestionInput(event.target.value)}
+                    placeholder={scopedIds.length > 0 ? `1-${scopedIds.length}` : "No questions"}
+                    disabled={scopedIds.length === 0}
+                    className="min-w-0 flex-1 rounded-xl border border-[#d6e1e5] bg-[#fffdf9] px-3 py-2 text-sm font-semibold text-[#2d3742] focus:border-[#547792] focus:outline-none focus:ring-2 focus:ring-[#547792]/25 disabled:cursor-not-allowed disabled:opacity-60"
+                  />
+                  <button
+                    type="submit"
+                    disabled={scopedIds.length === 0 || jumpQuestionInput.trim() === ""}
+                    className="rounded-xl border border-[#547792] bg-[#547792] px-3.5 py-2 text-sm font-semibold text-white transition hover:bg-[#7895ad] disabled:cursor-not-allowed disabled:opacity-45"
+                  >
+                    Go
+                  </button>
+                </form>
+                <p className="mt-1.5 text-xs font-medium text-[#7a8898]">
+                  Forward jumps mark skipped-over unanswered questions as skipped until you revisit them.
+                </p>
               </div>
               <hr className="mt-4 mb-4"></hr>
               <div className="mt-3 grid gap-2">
