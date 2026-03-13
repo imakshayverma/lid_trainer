@@ -15,6 +15,7 @@ import type {
 } from "./types";
 
 type ReviewMode = "all" | "incorrect" | "skipped";
+const NEXT_QUESTION_DELAY_MS = 1500;
 
 const QUESTION_IMAGE_URLS = import.meta.glob("../data/img/*", {
   eager: true,
@@ -22,6 +23,7 @@ const QUESTION_IMAGE_URLS = import.meta.glob("../data/img/*", {
 }) as Record<string, string>;
 
 const DEFAULT_SETTINGS: AppSettings = {
+  autoAdvanceOnAnswer: false,
   showQuestionEn: false,
   showOptionEn: false,
   questionScope: "both",
@@ -72,7 +74,9 @@ function App() {
   const [reviewMode, setReviewMode] = useState<ReviewMode>("all");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [infoOpen, setInfoOpen] = useState(!persisted);
+  const [isTransitioningNext, setIsTransitioningNext] = useState(false);
   const hasPickedInitialQuestionRef = useRef(false);
+  const nextQuestionTimeoutRef = useRef<number | null>(null);
 
   const regionNameByCode = useMemo(
     () => new Map(REGION_OPTIONS.map((region) => [region.code, region.name])),
@@ -173,6 +177,14 @@ function App() {
   }, [activeIds, currentIndex]);
 
   useEffect(() => {
+    return () => {
+      if (nextQuestionTimeoutRef.current !== null) {
+        window.clearTimeout(nextQuestionTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
     saveState({ progressById, settings });
   }, [progressById, settings]);
 
@@ -182,6 +194,9 @@ function App() {
         if (event.key === "Escape") {
           setInfoOpen(false);
         }
+        return;
+      }
+      if (isTransitioningNext) {
         return;
       }
 
@@ -197,7 +212,7 @@ function App() {
       if (event.key === "ArrowRight") {
         event.preventDefault();
         markUnansweredAsSkipped(activeQuestion.id);
-        setCurrentIndex((prev) => Math.min(prev + 1, activeIds.length - 1));
+        goToNextQuestion();
         return;
       }
 
@@ -210,9 +225,7 @@ function App() {
       if (event.key.toLowerCase() === "s") {
         event.preventDefault();
         markProgress(activeQuestion.id, "skipped", null);
-        if (currentIndex < activeIds.length - 1) {
-          setCurrentIndex((prev) => prev + 1);
-        }
+        goToNextQuestion();
         return;
       }
 
@@ -226,7 +239,37 @@ function App() {
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  });
+  }, [activeIds.length, activeQuestion, currentIndex, infoOpen, isTransitioningNext]);
+
+  function cancelPendingNextQuestion() {
+    if (nextQuestionTimeoutRef.current !== null) {
+      window.clearTimeout(nextQuestionTimeoutRef.current);
+      nextQuestionTimeoutRef.current = null;
+    }
+    setIsTransitioningNext(false);
+  }
+
+  function queueNextQuestion(targetIndex: number) {
+    if (targetIndex <= currentIndex) {
+      return;
+    }
+
+    cancelPendingNextQuestion();
+    setIsTransitioningNext(true);
+    nextQuestionTimeoutRef.current = window.setTimeout(() => {
+      nextQuestionTimeoutRef.current = null;
+      setCurrentIndex(targetIndex);
+      setIsTransitioningNext(false);
+    }, NEXT_QUESTION_DELAY_MS);
+  }
+
+  function goToNextQuestion() {
+    if (currentIndex >= activeIds.length - 1) {
+      return;
+    }
+
+    queueNextQuestion(Math.min(currentIndex + 1, activeIds.length - 1));
+  }
 
   function markProgress(questionId: string, status: QuestionStatus, selectedIndex: number | null) {
     setProgressById((previous) => {
@@ -249,8 +292,21 @@ function App() {
   }
 
   function chooseAnswer(question: Question, index: number) {
+    if (isTransitioningNext) {
+      return;
+    }
+
     const isCorrect = question.correctIndex === index;
     markProgress(question.id, isCorrect ? "correct" : "incorrect", index);
+
+    // Filtered review decks already advance when the answered card drops out of the deck.
+    if (
+      settings.autoAdvanceOnAnswer &&
+      reviewMode === "all" &&
+      currentIndex < activeIds.length - 1
+    ) {
+      goToNextQuestion();
+    }
   }
 
   function markUnansweredAsSkipped(questionId: string) {
@@ -276,12 +332,14 @@ function App() {
     if (!confirmed) {
       return;
     }
+    cancelPendingNextQuestion();
     setProgressById({});
     setReviewMode("all");
     setCurrentIndex(0);
   }
 
   function updateScope(scope: QuestionScope) {
+    cancelPendingNextQuestion();
     setSettings((value) => ({ ...value, questionScope: scope }));
     setCurrentIndex(0);
     setReviewMode("all");
@@ -370,11 +428,18 @@ function App() {
                 reviewMode={reviewMode}
                 onReturnToAll={() => {
                   setReviewMode("all");
+                  cancelPendingNextQuestion();
                   setCurrentIndex(0);
                 }}
               />
             ) : (
-              <>
+              <div
+                key={activeQuestion.id}
+                className={classNames(
+                  "animate-question-fade transition-opacity duration-1000",
+                  isTransitioningNext && "opacity-0"
+                )}
+              >
                 <div className="-mx-3 -mt-3 flex flex-wrap items-center justify-between gap-2.5 rounded-t-xl border-b border-[#cedde1] bg-[#afc9aa] px-3 py-4 sm:-mx-4 sm:-mt-4 sm:px-4 sm:py-4">
                   <div>
                     <p className="text-lg font-extrabold tracking-tight text-[#2c3642] sm:text-xl">
@@ -427,6 +492,7 @@ function App() {
                       <button
                         type="button"
                         key={`${activeQuestion.id}-option-${index}`}
+                        disabled={isTransitioningNext}
                         onClick={() => chooseAnswer(activeQuestion, index)}
                         className={classNames(
                           "w-full rounded-xl border px-3 py-2.5 text-left transition duration-200 sm:px-3.5 sm:py-3",
@@ -440,7 +506,8 @@ function App() {
                           !showCorrectHighlight &&
                           !showIncorrectHighlight &&
                           !isSelected &&
-                          "border-[#dbe5e8] bg-[#fffdf9] text-[#2d3742] hover:border-[#c7d6dd] hover:bg-[#f7fbfa]"
+                          "border-[#dbe5e8] bg-[#fffdf9] text-[#2d3742] hover:border-[#c7d6dd] hover:bg-[#f7fbfa]",
+                          isTransitioningNext && "cursor-wait opacity-80"
                         )}
                       >
                         <div className="flex items-start gap-3">
@@ -464,8 +531,11 @@ function App() {
                 <nav className="sticky bottom-2 z-20 mt-3 grid grid-cols-3 gap-1.5 rounded-xl border border-[#dbe5e8] bg-[#fffdf9]/95 p-1.5 backdrop-blur-sm sm:static sm:mt-4 sm:flex sm:flex-wrap sm:items-center sm:gap-2 sm:rounded-none sm:border-0 sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
                   <button
                     type="button"
-                    onClick={() => setCurrentIndex((prev) => Math.max(prev - 1, 0))}
-                    disabled={currentIndex === 0}
+                    onClick={() => {
+                      cancelPendingNextQuestion();
+                      setCurrentIndex((prev) => Math.max(prev - 1, 0));
+                    }}
+                    disabled={currentIndex === 0 || isTransitioningNext}
                     className="w-full rounded-xl border border-[#d6e1e5] bg-[#fffdf9] px-2.5 py-2 text-sm font-semibold text-[#3c4b5e] transition hover:border-[#c2d2d9] hover:bg-[#f4f9f7] disabled:cursor-not-allowed disabled:opacity-45 sm:w-auto sm:px-3.5 sm:py-2"
                   >
                     Previous
@@ -474,13 +544,12 @@ function App() {
                     type="button"
                     onClick={() => {
                       markProgress(activeQuestion.id, "skipped", null);
-                      if (currentIndex < activeIds.length - 1) {
-                        setCurrentIndex((prev) => prev + 1);
-                      }
+                      goToNextQuestion();
                     }}
+                    disabled={isTransitioningNext}
                     className="w-full rounded-xl border border-[#d2e0e8] bg-[#eaf3f8] px-2.5 py-2 text-sm font-semibold text-[#4f6f88] transition hover:border-[#c0d3de] hover:bg-[#e2edf5] sm:w-auto sm:px-3.5 sm:py-2"
                   >
-                    Skip
+                    {isTransitioningNext ? "Moving..." : "Skip"}
                   </button>
                   <button
                     type="button"
@@ -488,15 +557,15 @@ function App() {
                       if (activeQuestion) {
                         markUnansweredAsSkipped(activeQuestion.id);
                       }
-                      setCurrentIndex((prev) => Math.min(prev + 1, activeIds.length - 1));
+                      goToNextQuestion();
                     }}
-                    disabled={currentIndex === activeIds.length - 1}
+                    disabled={currentIndex === activeIds.length - 1 || isTransitioningNext}
                     className="w-full rounded-xl border border-[#547792] bg-[#547792] px-2.5 py-2 text-sm font-semibold text-white transition hover:bg-[#7895ad] disabled:cursor-not-allowed disabled:opacity-45 sm:w-auto sm:px-3.5 sm:py-2"
                   >
-                    Next
+                    {isTransitioningNext ? "Moving..." : "Next"}
                   </button>
                 </nav>
-              </>
+              </div>
             )}
           </section>
 
@@ -546,6 +615,7 @@ function App() {
                   value={settings.selectedRegionCode}
                   onChange={(event) => {
                     const nextRegionCode = event.target.value;
+                    cancelPendingNextQuestion();
                     setSettings((value) => ({
                       ...value,
                       selectedRegionCode: nextRegionCode
@@ -568,6 +638,7 @@ function App() {
                   active={reviewMode === "all"}
                   label={`All (${scopedIds.length})`}
                   onClick={() => {
+                    cancelPendingNextQuestion();
                     setReviewMode("all");
                     setCurrentIndex(0);
                   }}
@@ -576,6 +647,7 @@ function App() {
                   active={reviewMode === "incorrect"}
                   label={`Incorrect (${scopedIncorrectIds.length})`}
                   onClick={() => {
+                    cancelPendingNextQuestion();
                     setReviewMode("incorrect");
                     setCurrentIndex(0);
                   }}
@@ -584,6 +656,7 @@ function App() {
                   active={reviewMode === "skipped"}
                   label={`Skipped (${scopedSkippedIds.length})`}
                   onClick={() => {
+                    cancelPendingNextQuestion();
                     setReviewMode("skipped");
                     setCurrentIndex(0);
                   }}
@@ -609,6 +682,13 @@ function App() {
                   label="Show English options"
                   onChange={(checked) =>
                     setSettings((value) => ({ ...value, showOptionEn: checked }))
+                  }
+                />
+                <ToggleSwitch
+                  checked={settings.autoAdvanceOnAnswer}
+                  label="Auto-next after answer"
+                  onChange={(checked) =>
+                    setSettings((value) => ({ ...value, autoAdvanceOnAnswer: checked }))
                   }
                 />
               </div>

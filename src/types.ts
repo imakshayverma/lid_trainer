@@ -49,6 +49,7 @@ export interface QuestionProgress {
 export type QuestionScope = "general" | "region" | "both";
 
 export interface AppSettings {
+  autoAdvanceOnAnswer: boolean;
   showQuestionEn: boolean;
   showOptionEn: boolean;
   questionScope: QuestionScope;
