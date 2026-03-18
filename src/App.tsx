@@ -249,12 +249,17 @@ function App() {
     setIsTransitioningNext(false);
   }
 
-  function queueNextQuestion(targetIndex: number) {
+  function queueNextQuestion(targetIndex: number, delayed: boolean) {
     if (targetIndex <= currentIndex) {
       return;
     }
 
     cancelPendingNextQuestion();
+    if (!delayed) {
+      setCurrentIndex(targetIndex);
+      return;
+    }
+
     setIsTransitioningNext(true);
     nextQuestionTimeoutRef.current = window.setTimeout(() => {
       nextQuestionTimeoutRef.current = null;
@@ -263,12 +268,15 @@ function App() {
     }, NEXT_QUESTION_DELAY_MS);
   }
 
-  function goToNextQuestion() {
+  function goToNextQuestion(options?: { delayed?: boolean }) {
     if (currentIndex >= activeIds.length - 1) {
       return;
     }
 
-    queueNextQuestion(Math.min(currentIndex + 1, activeIds.length - 1));
+    queueNextQuestion(
+      Math.min(currentIndex + 1, activeIds.length - 1),
+      options?.delayed ?? false
+    );
   }
 
   function markProgress(questionId: string, status: QuestionStatus, selectedIndex: number | null) {
@@ -305,7 +313,7 @@ function App() {
       reviewMode === "all" &&
       currentIndex < activeIds.length - 1
     ) {
-      goToNextQuestion();
+      goToNextQuestion({ delayed: true });
     }
   }
 
